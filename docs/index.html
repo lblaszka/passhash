@@ -35,8 +35,6 @@
             
             let settings=[];
             settings.useSpecialChars = document.getElementById("specialChars").checked;
-
-            console.log("Values:\n inputText1: "+inputText1+"\n inputText2: "+inputText2);
             let passhash = getPasshash(inputText1, inputText2, settings);
             document.getElementById("passhash").innerHTML = passhash;
         }
