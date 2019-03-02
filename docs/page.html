@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Passhash test</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+    <script src="sha256.js"></script>
+    <script src="passhash.js"></script>
+    <script>
+        function getValueOfElement( elementId )
+        {
+            let elementValue = document.getElementById(elementId).value;
+            if( elementValue.length == 0 )
+            {
+                document.getElementById(elementId).value = "default";
+                return "default";
+            }
+
+            return elementValue;
+        }
+
+        function putPasshash() {
+            let inputText1 = getValueOfElement("input1");
+            let inputText2 = getValueOfElement("input2");
+            
+            let settings=[];
+            settings.useSpecialChars = document.getElementById("specialChars").checked;
+
+            console.log("Values:\n inputText1: "+inputText1+"\n inputText2: "+inputText2);
+            let passhash = getPasshash(inputText1, inputText2, settings);
+            document.getElementById("passhash").innerHTML = passhash;
+        }
+    </script>
+
+    <div>
+        <input id="input1" type="password" onchange="putPasshash()"/>
+    </div>
+    <div>
+        <input id="input2" onchange="putPasshash()" />
+    </div>
+    <div>
+        <input type="checkbox" id="specialChars" onchange="putPasshash()"   />Use special chars
+    <div id="passhash">
+    </div>
+    <div>
+        <input type="button" value="Copy 12 chars" onclick="toClipboard(12)" />
+        <input type="button" value="Copy 24 chars" onclick="toClipboard(24)" />
+        <input type="button" value="Copy 32 chars" onclick="toClipboard(32)" />
+    </div>
+    <script>
+        putPasshash();
+
+        function toClipboard( charNumber )
+        {
+            let input2 = document.getElementById("input2");
+            let input2Value = input2.value;
+            let toCopy = document.getElementById("passhash").innerHTML.substr(0, charNumber);
+            
+            input2.value = toCopy;
+            input2.select();
+            document.execCommand("copy");
+            input2.value = input2Value;
+        }
+    </script>
+</body>
+
+</html>
