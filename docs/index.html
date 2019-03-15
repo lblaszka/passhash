@@ -29,15 +29,29 @@
             return elementValue;
         }
 
-        function putPasshash() {
+        function getPasshashFromInputs()
+        {
             let inputText1 = getValueOfElement("input1");
             let inputText2 = getValueOfElement("input2");
-            
-            let settings=[];
+
+            let settings = [];
             settings.useSpecialChars = document.getElementById("specialChars").checked;
-            let passhash = getPasshash(inputText1, inputText2, settings);
-            document.getElementById("passhash").innerHTML = passhash;
+
+            return getPasshash(inputText1, inputText2, settings);
+        
         }
+
+        function setDomainFromUrlInInput2()
+        {
+            document.getElementById("input2").value = getDomain(getValueOfElement("input2"));
+        }
+
+        function putPasshash() {
+            setDomainFromUrlInInput2();
+            document.getElementById("passhash").innerHTML = getPasshashFromInputs().substr(0,4)+"...";
+        }
+
+
     </script>
 
     <div>
@@ -48,7 +62,9 @@
     </div>
     <div>
         <input type="checkbox" id="specialChars" onchange="putPasshash()"   />Use special chars
-    <div id="passhash">
+    <div>
+        <b>Preview:</b>
+        <div id="passhash"></div>
     </div>
     <div>
         <input type="button" value="Copy 12 chars" onclick="toClipboard(12)" />
@@ -62,7 +78,7 @@
         {
             let input2 = document.getElementById("input2");
             let input2Value = input2.value;
-            let toCopy = document.getElementById("passhash").innerHTML.substr(0, charNumber);
+            let toCopy = getPasshashFromInputs().substr(0, charNumber);
             
             input2.value = toCopy;
             input2.select();
