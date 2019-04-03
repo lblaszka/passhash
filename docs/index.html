@@ -55,10 +55,14 @@
     </script>
 
     <div>
+
         <input id="input1" type="password" onchange="putPasshash()"/>
     </div>
-    <div>
-        <input id="input2" onchange="putPasshash()" value="https://github.com/" />
+    <div>          
+        <datalist id="input2" onchange="putPasshash()">
+            <option value="https://github.com/">
+            <option value="https://www.google.com/">
+          </datalist>
     </div>
     <div>
         <input type="checkbox" id="specialChars" onchange="putPasshash()"   />Use special chars
